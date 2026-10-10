@@ -1,0 +1,63 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  color: #1e293b;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 8%;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logo {
+  color: #2563eb;
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 25px;
+}
+
+nav a {
+  color: #475569;
+  text-decoration: none;
+}
+
+nav a.active,
+nav a:hover {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+main {
+  min-height: 70vh;
+}
+
+footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  background: #0f172a;
+  color: white;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 18px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  nav {
+    gap: 15px;
+  }
+}

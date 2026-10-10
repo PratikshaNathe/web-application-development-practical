@@ -1,0 +1,42 @@
+
+<section class="jobs-page">
+  <h1>Explore Jobs</h1>
+  <p>Find the right opportunity for your career.</p>
+
+  <input
+    class="job-search"
+    [(ngModel)]="searchText"
+    placeholder="Search title, company, location or skill..."
+    aria-label="Filter jobs"
+  />
+
+  <p>{{ filteredJobs.length }} job(s) found</p>
+
+  <div class="job-grid">
+    @for (job of filteredJobs; track job.id) {
+      <article class="job-card">
+        <span class="job-type">{{ job.type }}</span>
+
+        <h2>{{ job.title }}</h2>
+        <p class="company">{{ job.company }}</p>
+        <p>Location: {{ job.location }}</p>
+        <p>Salary: {{ job.salary }}</p>
+
+        <div class="skills">
+          @for (skill of job.skills; track skill) {
+            <span>{{ skill }}</span>
+          }
+        </div>
+
+        <a class="details-link" [routerLink]="['/jobs', job.id]">
+          View Details →
+        </a>
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <h3>No jobs found</h3>
+        <p>Try a different search keyword.</p>
+      </div>
+    }
+  </div>
+</section>

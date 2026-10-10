@@ -1,0 +1,21 @@
+<section>
+  <h2>Student Information 👩‍🎓</h2>
+
+  <div class="card">
+
+    <h3>{{ name }}</h3>
+
+    <p>Course: {{ course | uppercase }}</p>
+
+    <button (click)="showDetails()">
+      {{ show ? 'Hide Details' : 'Show Details' }}
+    </button>
+
+    <div *ngIf="show">
+      <p>Year: Third Year</p>
+      <p>College: SPPU</p>
+      <p>Status: Active</p>
+    </div>
+
+  </div>
+</section>

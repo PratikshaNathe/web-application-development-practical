@@ -1,0 +1,449 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Examination System</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a href="/" class="brand">
+    <span class="brand-icon">◆</span>
+    Online Examination System
+  </a>
+
+  <nav>
+    <% if (currentUser) { %>
+      <a href="/dashboard">Dashboard</a>
+      <span class="nav-user"><%= currentUser.name %></span>
+      <form action="/logout" method="POST" class="inline-form">
+        <button class="nav-logout" type="submit">Logout</button>
+      </form>
+    <% } else { %>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/register">Register</a>
+    <% } %>
+  </nav>
+</header>
+
+<main class="container">
+
+  <% if (page === "home") { %>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">LEARN · TEST · IMPROVE</p>
+        <h1>Welcome to Online Examination System</h1>
+        <p>Take online examinations, check your performance, and view your results in one place.</p>
+        <div class="hero-actions">
+          <a class="btn" href="/login">Login</a>
+          <a class="btn btn-outline" href="/register">Register</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="art-circle"></div>
+        <div class="laptop">
+          <div class="laptop-screen">
+            <div class="screen-title">Online Examination</div>
+            <div class="check-line">✓  Questions</div>
+            <div class="check-line">✓  Assessments</div>
+            <div class="check-line">✓  Results</div>
+          </div>
+          <div class="laptop-base"></div>
+        </div>
+        <div class="book-stack">▰ ▰ ▰</div>
+      </div>
+    </section>
+
+    <section class="feature-grid">
+      <article class="card">
+        <div class="feature-icon">01</div>
+        <h3>Online Exams</h3>
+        <p>Register for examinations and answer multiple-choice questions online.</p>
+      </article>
+      <article class="card">
+        <div class="feature-icon">02</div>
+        <h3>Easy Management</h3>
+        <p>Administrators can create examinations and manage questions.</p>
+      </article>
+      <article class="card">
+        <div class="feature-icon">03</div>
+        <h3>Instant Results</h3>
+        <p>View your score after submitting an examination.</p>
+      </article>
+    </section>
+
+  <% } else if (page === "register") { %>
+    <section class="auth-card card">
+      <h1>Create Student Account</h1>
+      <p class="muted">Register to access online examinations.</p>
+
+      <% if (error) { %>
+        <div class="alert"><%= error %></div>
+      <% } %>
+
+      <form action="/register" method="POST" class="form-stack">
+        <label>Full Name</label>
+        <input type="text" name="name" placeholder="Enter your name" required>
+
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="student@example.com" required>
+
+        <label>Password</label>
+        <input type="password" name="password"
+               placeholder="At least 8 characters" minlength="8" required>
+
+        <button class="btn btn-full" type="submit">Register</button>
+      </form>
+      <p class="form-footer">Already registered? <a href="/login">Login</a></p>
+    </section>
+
+  <% } else if (page === "login") { %>
+    <section class="auth-card card">
+      <h1>Welcome Back</h1>
+      <p class="muted">Login to continue to your dashboard.</p>
+
+      <% if (error) { %>
+        <div class="alert"><%= error %></div>
+      <% } %>
+
+      <form action="/login" method="POST" class="form-stack">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required>
+
+        <button class="btn btn-full" type="submit">Login</button>
+      </form>
+      <p class="form-footer">New student? <a href="/register">Create an account</a></p>
+    </section>
+
+  <% } else if (page === "admin") { %>
+    <div class="dashboard-heading">
+      <div>
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h1>Admin Dashboard</h1>
+        <p class="muted">Create exams, manage questions, and review student results.</p>
+      </div>
+      <div class="stat-card">
+        <span>Total Examinations</span>
+        <strong><%= exams.length %></strong>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <section class="card">
+        <h2>Create Examination</h2>
+        <form action="/admin/exams" method="POST" class="form-stack">
+          <label>Exam Title</label>
+          <input name="title" placeholder="e.g. Java Programming Test" required>
+
+          <label>Description</label>
+          <textarea name="description" rows="3" placeholder="Enter exam details"></textarea>
+
+          <label>Duration (minutes)</label>
+          <input type="number" name="duration" min="1" value="30" required>
+
+          <button class="btn btn-full" type="submit">Create Exam</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>Manage Examinations</h2>
+
+        <% if (exams.length === 0) { %>
+          <p class="muted">No examinations created yet.</p>
+        <% } %>
+
+        <% exams.forEach(exam => { %>
+          <article class="exam-card">
+            <div class="exam-card-heading">
+              <h3><%= exam.title %></h3>
+              <span class="pill"><%= exam.questions.length %> questions</span>
+            </div>
+            <p><%= exam.description || "No description provided." %></p>
+            <p class="muted">Duration: <%= exam.duration %> minutes</p>
+
+            <details>
+              <summary class="btn btn-small">Add Question</summary>
+              <form action="/admin/exams/<%= exam._id %>/questions"
+                    method="POST" class="form-stack question-form">
+                <label>Question</label>
+                <textarea name="text" required></textarea>
+
+                <label>Option 1</label>
+                <input name="option1" required>
+
+                <label>Option 2</label>
+                <input name="option2" required>
+
+                <label>Option 3</label>
+                <input name="option3" required>
+
+                <label>Option 4</label>
+                <input name="option4" required>
+
+                <label>Correct Option</label>
+                <select name="correctAnswer" required>
+                  <option value="0">Option 1</option>
+                  <option value="1">Option 2</option>
+                  <option value="2">Option 3</option>
+                  <option value="3">Option 4</option>
+                </select>
+
+                <label>Marks</label>
+                <input type="number" name="marks" min="1" value="1" required>
+
+                <button class="btn btn-full" type="submit">Save Question</button>
+              </form>
+            </details>
+
+            <form action="/admin/exams/<%= exam._id %>/delete"
+                  method="POST"
+                  onsubmit="return confirm('Delete this examination?')">
+              <button class="btn btn-danger btn-full" type="submit">Delete Exam</button>
+            </form>
+          </article>
+        <% }) %>
+      </section>
+    </div>
+
+    <section class="card section-gap">
+      <h2>Student Results</h2>
+
+      <% if (results.length === 0) { %>
+        <p class="muted">No results submitted yet.</p>
+      <% } else { %>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Examination</th>
+                <th>Score</th>
+                <th>Submitted On</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% results.forEach(result => { %>
+                <tr>
+                  <td><%= result.student ? result.student.name : "Unknown" %></td>
+                  <td><%= result.exam ? result.exam.title : "Deleted exam" %></td>
+                  <td><%= result.score %> / <%= result.totalMarks %></td>
+                  <td><%= result.submittedAt.toLocaleString() %></td>
+                  <td><a href="/results/<%= result._id %>">View</a></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </section>
+
+  <% } else if (page === "student") { %>
+    <div class="dashboard-heading">
+      <div>
+        <p class="eyebrow">STUDENT AREA</p>
+        <h1>Welcome, <%= currentUser.name %>!</h1>
+        <p class="muted">Find an examination and check your results.</p>
+      </div>
+      <div class="stat-card">
+        <span>Results Received</span>
+        <strong><%= results.length %></strong>
+      </div>
+    </div>
+
+    <section class="card">
+      <h2>Available Examinations</h2>
+
+      <% if (exams.length === 0) { %>
+        <p class="muted">No examinations are available yet.</p>
+      <% } %>
+
+      <div class="exam-grid">
+        <% exams.forEach(exam => {
+          const registered = exam.registeredStudents.some(
+            id => id.toString() === currentUser._id.toString()
+          );
+          const submitted = results.some(
+            result => result.exam &&
+              result.exam._id.toString() === exam._id.toString()
+          );
+        %>
+          <article class="exam-card">
+            <span class="pill"><%= exam.duration %> minutes</span>
+            <h3><%= exam.title %></h3>
+            <p><%= exam.description || "No description provided." %></p>
+            <p class="muted"><%= exam.questions.length %> questions</p>
+
+            <% if (submitted) { %>
+              <p class="status-complete">Examination submitted</p>
+            <% } else if (exam.questions.length === 0) { %>
+              <button class="btn btn-full" disabled>No questions yet</button>
+            <% } else if (registered) { %>
+              <a class="btn btn-full" href="/exams/<%= exam._id %>/attempt">Start Exam</a>
+            <% } else { %>
+              <form action="/exams/<%= exam._id %>/register" method="POST">
+                <button class="btn btn-full" type="submit">Register for Exam</button>
+              </form>
+            <% } %>
+          </article>
+        <% }) %>
+      </div>
+    </section>
+
+    <section class="card section-gap">
+      <h2>My Results</h2>
+
+      <% if (results.length === 0) { %>
+        <p class="muted">Your submitted results will appear here.</p>
+      <% } else { %>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Examination</th>
+                <th>Score</th>
+                <th>Date</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% results.forEach(result => { %>
+                <tr>
+                  <td><%= result.exam ? result.exam.title : "Exam" %></td>
+                  <td><%= result.score %> / <%= result.totalMarks %></td>
+                  <td><%= result.submittedAt.toLocaleString() %></td>
+                  <td><a href="/results/<%= result._id %>">View Result</a></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </section>
+
+  <% } else if (page === "attempt") { %>
+    <section class="exam-header">
+      <div>
+        <p class="eyebrow">ONLINE EXAMINATION</p>
+        <h1><%= exam.title %></h1>
+        <p class="muted">Select one answer for each question.</p>
+      </div>
+      <div class="timer-box">
+        <span>Time Remaining</span>
+        <strong id="timer">--:--</strong>
+      </div>
+    </section>
+
+    <form id="examForm" action="/exams/<%= exam._id %>/submit" method="POST">
+      <% exam.questions.forEach((question, index) => { %>
+        <section class="card question-card">
+          <div class="question-title">
+            <span class="question-number"><%= index + 1 %></span>
+            <h3><%= question.text %></h3>
+          </div>
+
+          <p class="muted"><%= question.marks %> mark(s)</p>
+
+          <% question.options.forEach((option, optionIndex) => { %>
+            <label class="option">
+              <input type="radio"
+                     name="answers[<%= question._id %>]"
+                     value="<%= optionIndex %>">
+              <span><%= option %></span>
+            </label>
+          <% }) %>
+        </section>
+      <% }) %>
+
+      <button class="btn btn-full submit-exam" type="submit"
+              onclick="return confirm('Submit your examination?')">
+        Submit Examination
+      </button>
+    </form>
+
+    <script>
+      let remaining = <%= exam.duration %> * 60;
+      const timer = document.getElementById("timer");
+      const examForm = document.getElementById("examForm");
+      let submitted = false;
+
+      function updateTimer() {
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+
+        timer.textContent =
+          minutes + ":" + String(seconds).padStart(2, "0");
+
+        if (remaining <= 0) {
+          if (!submitted) {
+            submitted = true;
+            examForm.requestSubmit();
+          }
+          return;
+        }
+
+        remaining--;
+      }
+
+      updateTimer();
+      const timerInterval = setInterval(() => {
+        updateTimer();
+        if (remaining <= 0) clearInterval(timerInterval);
+      }, 1000);
+
+      examForm.addEventListener("submit", function () {
+        submitted = true;
+        clearInterval(timerInterval);
+      });
+    </script>
+
+  <% } else if (page === "result") { %>
+    <section class="result-card card">
+      <div class="success-icon">✓</div>
+      <p class="eyebrow">EXAMINATION COMPLETED</p>
+      <h1>Exam Result</h1>
+
+      <p class="result-student">
+        Student: <strong><%= result.student.name %></strong>
+      </p>
+      <p>
+        Examination:
+        <strong><%= result.exam ? result.exam.title : "Exam" %></strong>
+      </p>
+
+      <div class="score">
+        <strong><%= result.score %></strong>
+        <span>/ <%= result.totalMarks %></span>
+      </div>
+      <p class="muted">Score out of total marks</p>
+
+      <div class="result-details">
+        <p>
+          <span>Submitted On</span>
+          <strong><%= result.submittedAt.toLocaleString() %></strong>
+        </p>
+        <p>
+          <span>Total Marks</span>
+          <strong><%= result.totalMarks %></strong>
+        </p>
+      </div>
+
+      <a class="btn btn-full" href="/dashboard">Back to Dashboard</a>
+    </section>
+  <% } %>
+
+</main>
+
+<footer class="footer">
+  Online Examination System · Built with Node.js, Express and MongoDB
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+section {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+h2 {
+  color: #2563eb;
+}
+
+ul {
+  display: inline-block;
+  text-align: left;
+  line-height: 2;
+}

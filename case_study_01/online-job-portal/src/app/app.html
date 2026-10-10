@@ -1,0 +1,25 @@
+
+<header class="navbar">
+  <a class="logo" routerLink="/">CareerConnect</a>
+
+  <nav>
+    <a
+      routerLink="/"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
+
+    <a routerLink="/jobs" routerLinkActive="active">
+      Find Jobs
+    </a>
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer>
+  <p>© 2026 CareerConnect | Online Job Portal</p>
+</footer>

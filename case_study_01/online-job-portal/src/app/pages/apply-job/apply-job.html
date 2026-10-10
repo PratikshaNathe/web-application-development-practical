@@ -1,0 +1,74 @@
+
+@if (job; as currentJob) {
+  <section class="apply-page">
+    <a [routerLink]="['/jobs', currentJob.id]" class="back-link">
+      ← Back to Job Details
+    </a>
+
+    <div class="form-card">
+      <h1>Apply for Job</h1>
+      <h3>{{ currentJob.title }}</h3>
+      <p>{{ currentJob.company }} · {{ currentJob.location }}</p>
+
+      <form #applicationForm="ngForm" (ngSubmit)="submitApplication()">
+        <label for="name">Full Name</label>
+        <input
+          id="name"
+          name="name"
+          [(ngModel)]="applicant.name"
+          required
+          minlength="2"
+          #name="ngModel"
+        />
+        @if (name.invalid && name.touched) {
+          <small>Please enter your name.</small>
+        }
+
+        <label for="email">Email Address</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          [(ngModel)]="applicant.email"
+          required
+          email
+          #email="ngModel"
+        />
+        @if (email.invalid && email.touched) {
+          <small>Enter a valid email address.</small>
+        }
+
+        <label for="phone">Phone Number</label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          [(ngModel)]="applicant.phone"
+          required
+          pattern="[0-9]{10}"
+          #phone="ngModel"
+        />
+        @if (phone.invalid && phone.touched) {
+          <small>Enter a 10-digit phone number.</small>
+        }
+
+        <label for="education">Education</label>
+        <input
+          id="education"
+          name="education"
+          placeholder="e.g. B.Tech Computer Science"
+          [(ngModel)]="applicant.education"
+          required
+          #education="ngModel"
+        />
+        @if (education.invalid && education.touched) {
+          <small>Enter your education details.</small>
+        }
+
+        <button type="submit" [disabled]="applicationForm.invalid">
+          Submit Application
+        </button>
+      </form>
+    </div>
+  </section>
+}

@@ -1,0 +1,67 @@
+
+.details-page {
+  padding: 35px 8%;
+}
+
+.back-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.details-card {
+  max-width: 850px;
+  margin: 25px auto;
+  padding: 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.details-card h1 {
+  margin-bottom: 8px;
+}
+
+.details-card h2 {
+  margin-top: 28px;
+}
+
+.company,
+.details-card p {
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.job-type,
+.skills span {
+  display: inline-block;
+  padding: 7px 10px;
+  border-radius: 5px;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.apply-button {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 13px 20px;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .details-page {
+    padding: 25px 5%;
+  }
+
+  .details-card {
+    padding: 20px;
+  }
+}

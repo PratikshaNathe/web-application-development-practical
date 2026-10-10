@@ -1,0 +1,75 @@
+
+.apply-page {
+  padding: 35px 8%;
+}
+
+.back-link {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.form-card {
+  max-width: 600px;
+  margin: 25px auto;
+  padding: 30px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.form-card > p {
+  color: #64748b;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+label {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font: inherit;
+}
+
+input:focus {
+  border-color: #2563eb;
+  outline: 2px solid #dbeafe;
+}
+
+small {
+  color: #dc2626;
+}
+
+button {
+  margin-top: 20px;
+  padding: 13px;
+  border: none;
+  border-radius: 7px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .apply-page {
+    padding: 25px 5%;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+}

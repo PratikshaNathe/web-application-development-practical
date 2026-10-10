@@ -1,0 +1,27 @@
+
+<header class="navbar">
+  <a routerLink="/" class="logo">
+    Job<span>Portal</span>
+  </a>
+
+  <nav>
+    <a routerLink="/" routerLinkActive="active"
+       [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
+
+    <a routerLink="/jobs" routerLinkActive="active">
+      Browse Jobs
+    </a>
+  </nav>
+
+  <a routerLink="/jobs" class="nav-button">Find a Job</a>
+</header>
+
+<main class="container">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="footer">
+  <p>© 2026 JobPortal | Connecting Talent with Opportunity</p>
+</footer>

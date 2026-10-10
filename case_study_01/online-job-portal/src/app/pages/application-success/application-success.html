@@ -1,0 +1,26 @@
+
+<section class="success-page">
+  <div class="success-card">
+    <div class="success-icon">✓</div>
+
+    <h1>Application Submitted!</h1>
+
+    @if (jobService.lastSubmittedJobTitle) {
+      <p>
+        Your application for
+        <strong>{{ jobService.lastSubmittedJobTitle }}</strong>
+        has been submitted successfully.
+      </p>
+    } @else {
+      <p>No recent application was found in this session.</p>
+    }
+
+    <p class="note">
+      This is a demonstration project. Applications are stored
+      temporarily and are not sent to real employers.
+    </p>
+
+    <a routerLink="/jobs">Explore More Jobs</a>
+    <a routerLink="/" class="home-link">Back to Home</a>
+  </div>
+</section>

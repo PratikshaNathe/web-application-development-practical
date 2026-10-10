@@ -1,0 +1,36 @@
+
+<section class="details-page">
+  @if (job) {
+    <div class="details-card">
+      <span class="job-type">{{ job.type }}</span>
+
+      <h1>{{ job.title }}</h1>
+      <h3>{{ job.company }}</h3>
+
+      <div class="info">
+        <p>📍 Location: {{ job.location }}</p>
+        <p>💰 Salary: {{ job.salary }}</p>
+        <p>🎓 Qualification: {{ job.qualification }}</p>
+      </div>
+
+      <h2>Job Description</h2>
+      <p class="description">{{ job.description }}</p>
+
+      <h2>Required Skills</h2>
+      <div class="skills">
+        @for (skill of job.skills; track skill) {
+          <span>{{ skill }}</span>
+        }
+      </div>
+
+      <a [routerLink]="['/apply', job.id]" class="apply-btn">
+        Apply for this Job
+      </a>
+    </div>
+  } @else {
+    <div class="details-card">
+      <h2>Job Not Found</h2>
+      <a routerLink="/jobs">Back to Job Listings</a>
+    </div>
+  }
+</section>

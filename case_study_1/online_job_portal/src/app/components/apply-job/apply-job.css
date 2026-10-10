@@ -1,0 +1,94 @@
+
+.apply-page {
+  max-width: 650px;
+  margin: 35px auto;
+}
+
+.apply-card {
+  background: white;
+  padding: 32px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px #0f172a0a;
+}
+
+.apply-card h1 {
+  color: #172554;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  color: #334155;
+  font-weight: bold;
+  margin: 16px 0 8px;
+}
+
+input,
+textarea {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font-size: 15px;
+  font-family: inherit;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+small {
+  color: #dc2626;
+  margin-top: 6px;
+}
+
+button {
+  margin-top: 25px;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.success {
+  text-align: center;
+  padding: 25px 5px;
+}
+
+.success h1 {
+  color: #15803d;
+}
+
+.success p {
+  color: #475569;
+  line-height: 1.7;
+}
+
+.success a {
+  display: inline-block;
+  margin-top: 15px;
+  background: #2563eb;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 7px;
+  text-decoration: none;
+}

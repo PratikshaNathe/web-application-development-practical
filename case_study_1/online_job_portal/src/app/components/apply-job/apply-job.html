@@ -1,0 +1,75 @@
+
+<section class="apply-page">
+  @if (job) {
+    <div class="apply-card">
+      @if (!submitted) {
+        <h1>Apply for Job</h1>
+        <p class="subtitle">
+          {{ job.title }} at {{ job.company }}
+        </p>
+
+        <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+
+          <label for="name">Full Name</label>
+          <input id="name" type="text"
+                 formControlName="name"
+                 placeholder="Enter your full name">
+
+          @if (applicationForm.controls.name.touched &&
+               applicationForm.controls.name.invalid) {
+            <small>Name is required.</small>
+          }
+
+          <label for="email">Email Address</label>
+          <input id="email" type="email"
+                 formControlName="email"
+                 placeholder="Enter your email">
+
+          @if (applicationForm.controls.email.touched &&
+               applicationForm.controls.email.invalid) {
+            <small>Enter a valid email address.</small>
+          }
+
+          <label for="skills">Skills</label>
+          <textarea id="skills" rows="3"
+                    formControlName="skills"
+                    placeholder="Example: Java, SQL, Angular"></textarea>
+
+          @if (applicationForm.controls.skills.touched &&
+               applicationForm.controls.skills.invalid) {
+            <small>Please enter your skills.</small>
+          }
+
+          <label for="resume">Resume URL</label>
+          <input id="resume" type="url"
+                 formControlName="resume"
+                 placeholder="https://example.com/resume.pdf">
+
+          @if (applicationForm.controls.resume.touched &&
+               applicationForm.controls.resume.invalid) {
+            <small>Enter a valid resume URL starting with http:// or https://.</small>
+          }
+
+          <button type="submit">Submit Application</button>
+        </form>
+      } @else {
+        <div class="success">
+          <h1>Application Submitted!</h1>
+          <p>
+            Thank you, {{ applicationForm.controls.name.value }}.
+          </p>
+          <p>
+            Your application for {{ job.title }} at {{ job.company }}
+            has been submitted successfully in this demo.
+          </p>
+          <a routerLink="/jobs">Explore More Jobs</a>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="apply-card">
+      <h2>Job Not Found</h2>
+      <a routerLink="/jobs">Back to Job Listings</a>
+    </div>
+  }
+</section>

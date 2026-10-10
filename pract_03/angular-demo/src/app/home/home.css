@@ -1,0 +1,24 @@
+section {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+h2 {
+  color: #2563eb;
+  font-size: 30px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.cards div {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #ccc;
+  font-weight: bold;
+}

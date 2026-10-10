@@ -1,0 +1,40 @@
+
+@if (job; as currentJob) {
+  <section class="details-page">
+    <a routerLink="/jobs" class="back-link">← Back to Jobs</a>
+
+    <article class="details-card">
+      <span class="job-type">{{ currentJob.type }}</span>
+
+      <h1>{{ currentJob.title }}</h1>
+      <p class="company">{{ currentJob.company }}</p>
+
+      <p>Location: {{ currentJob.location }}</p>
+      <p>Salary: {{ currentJob.salary }}</p>
+
+      <hr />
+
+      <h2>Job Description</h2>
+      <p>{{ currentJob.description }}</p>
+
+      <h2>Required Skills</h2>
+      <div class="skills">
+        @for (skill of currentJob.skills; track skill) {
+          <span>{{ skill }}</span>
+        }
+      </div>
+
+      <h2>Eligibility</h2>
+      <p>
+        Candidates with relevant education, basic technical knowledge,
+        and an interest in learning can apply.
+      </p>
+
+      <a
+        class="apply-button"
+        [routerLink]="['/jobs', currentJob.id, 'apply']">
+        Apply for This Job
+      </a>
+    </article>
+  </section>
+}

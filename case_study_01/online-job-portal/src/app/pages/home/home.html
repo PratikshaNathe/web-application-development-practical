@@ -1,0 +1,46 @@
+
+<section class="hero">
+  <p class="eyebrow">YOUR CAREER STARTS HERE</p>
+
+  <h1>Find a Job That Matches Your Future</h1>
+
+  <p class="description">
+    Discover opportunities and take the next step in your career.
+  </p>
+
+  <form class="search-box" (ngSubmit)="searchJobs()">
+    <input
+      name="searchText"
+      [(ngModel)]="searchText"
+      placeholder="Job title, company, location or skill"
+      aria-label="Search jobs"
+    />
+
+    <button type="submit">Search Jobs</button>
+  </form>
+
+  <a class="browse-link" routerLink="/jobs">
+    Browse All Jobs →
+  </a>
+</section>
+
+<section class="features">
+  <h2>Start Your Career Journey</h2>
+
+  <div class="feature-grid">
+    <article>
+      <h3>Find Opportunities</h3>
+      <p>Explore jobs that match your interests and skills.</p>
+    </article>
+
+    <article>
+      <h3>Explore Job Details</h3>
+      <p>Learn about job roles, required skills and salary.</p>
+    </article>
+
+    <article>
+      <h3>Apply Online</h3>
+      <p>Submit applications through a simple form.</p>
+    </article>
+  </div>
+</section>
